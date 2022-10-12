@@ -1,24 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import List from './Components/List.js';
+import  Provider  from './Components/Providers';
+import NotFound from './Components/NotFound';
 
 function App() {
+  const isLogged = window.localStorage.getItem("isLogged");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Provider value={ isLogged }>
+        <Routes>
+          <Route path="/" >
+            <Route index element={ <List /> } />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>      
+      </Provider>
+  </BrowserRouter>
   );
 }
 
