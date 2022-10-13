@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 function List(){
     const [budgets, setBudgets] = useState([]);
@@ -10,7 +10,6 @@ function List(){
     const [pagina, setPagina] = useState(0);
 
     const getBudgets = () => {
-    //fetch(`https://pokeapi.co/api/v2/pokemon?offset=${pagina*20}&limit=20`)
        fetch(`http://localhost:3000/?page=${pagina}`)
            .then(response => response.json())
            .then(data =>{ 
@@ -19,14 +18,14 @@ function List(){
                 setTotalPages( data.totalPages );
                 setNextPage( data.nextPage );
                 setPrevPage( data.prevPage );
-                console.log("Api call")
+                //console.log("Api call")
            })
            .catch(e => console.log("Error: " + e))        
     }
 
     useEffect(() => {
         getBudgets();
-        console.log("Api call use effect")
+        //console.log("Api call use effect")
     },[pagina])
 
     useEffect(() => {
@@ -54,13 +53,14 @@ function List(){
                     }                    
                 </div>
                 <div className="container-responsive">
+                    <ul>
                     {
                         budgets.map((budget, i) => {
                             return(
-                                <>
+                                <div key={i}>
                                     <div className="budget">
                                         <div className="card">                                                    
-                                            <ul className="list-group list-group-flush">
+                                            <div className="list-group list-group-flush">
                                                 <li className="list-group-item"> 
                                                 #{budget.id} 
                                                 | {budget.description} 
@@ -70,15 +70,17 @@ function List(){
                                                 | <Link to={`/edit/${budget.id}`}>Editar</Link> 
                                                 | <Link to={`/delete/${budget.id}`}>Eliminar</Link>
                                                 </li> 
-                                            </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                </>
+                                    </div>    
+                                </div>
                             )
                         })
-                    }                 
+                    }
+                    </ul>                 
                 </div>
             </div>     
+            <Outlet />
         </>
     )
 }
