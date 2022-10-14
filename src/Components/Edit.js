@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { AppContext } from './Providers'
+
 
 function Edit(){
     const params = useParams();
@@ -7,12 +9,19 @@ function Edit(){
     const [description, setDescription] = useState('');
     const [date, setDate] = useState('');
     const [idCategory, setCategory] = useState('');
+    const isLogged = useContext(AppContext);
+    const dataToEditPayload = isLogged[0];
+
+    const [state, setState] = useContext(AppContext);
+
+    console.log("isLogged: ", isLogged);
+    //console.log("dataToEditPayload: ", JSON.stringify(dataToEditPayload));
 
     const navigate = useNavigate();
     const dataToEdit = {
-        amount: parseFloat(amount),
-        description: description,
-        date: date,
+        amount: parseFloat(isLogged[0].amount),
+        description: isLogged[0].description,
+        date: isLogged[0].date,
         idCategory: parseInt(idCategory)
     }
 
@@ -49,6 +58,16 @@ function Edit(){
         setCategory(event.target.value);
     }
 
+    function editBudgetDataAmount(event) {
+        setState({ ...state, "amount" : event.target.value})
+    };
+    function editBudgetDataDescription(event) {
+        setState({ ...state, "description" : event.target.value})
+    };
+    function editBudgetDataDate(event) {
+        setState({ ...state, "date" : event.target.value})
+    };
+
     return(
         <>
             <div className="usuarios">
@@ -56,13 +75,13 @@ function Edit(){
                 <h4 className="LoginFormDescription">Edit</h4>
 
                     <label htmlFor="amount" className="editFormInputLabel">Monto</label>
-                    <input name="amount" id="amount" type="text" className="EditFormInput" value={amount} onChange={onAmountChange} />
+                    <input name="amount" id="amount" type="text" className="EditFormInput" value={dataToEditPayload.amount} onChange={editBudgetDataAmount} />
 
                     <label htmlFor="description" className="editFormInputLabel">Descripción</label>
-                    <input name="description" id="description" type="text" className="EditFormInput" value={description} onChange={onDescriptionChange} />
+                    <input name="description" id="description" type="text" className="EditFormInput" value={dataToEditPayload.description} onChange={editBudgetDataDescription} />
 
                     <label htmlFor="date" className="editFormInputLabel">Fecha</label>
-                    <input name="date" id="date" type="date" className="EditFormInput" value={date} onChange={onDateChange} />
+                    <input name="date" id="date" type="date" className="EditFormInput" value={dataToEditPayload.date} onChange={editBudgetDataDate} />
 
                     <label htmlFor="idCategory" className="editFormInputLabel">Categoria</label>
                     <input name="idCategory" id="idCategory" value={idCategory} type="number" className="EditFormInput" onChange={onCategoryChange} />

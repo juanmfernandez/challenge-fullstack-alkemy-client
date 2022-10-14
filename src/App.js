@@ -13,7 +13,7 @@ function App() {
   const isLogged = window.localStorage.getItem("isLogged");
   return (
     <BrowserRouter>
-      <Provider value={ isLogged }>
+      <Provider value={ isLogged } >
         <Routes>
           <Route path="/"  element={ <List /> }>
             <Route index element={ <Login /> } />

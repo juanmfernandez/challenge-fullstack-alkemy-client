@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import {AppContext} from './Providers.js';
 
 function List(){
     const [budgets, setBudgets] = useState([]);
@@ -8,6 +9,8 @@ function List(){
     const [prevPage, setPrevPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [pagina, setPagina] = useState(0);
+    //const [budgetToEdit, setBudgetToEdit] = useState([]);
+    const [state, setState] = useContext(AppContext);
 
     const getBudgets = () => {
        fetch(`http://localhost:3000/?page=${pagina}`)
@@ -39,6 +42,17 @@ function List(){
         setPagina(pagina - 1)
     }
 
+    const editBudgetData = (budget) => {
+        //setBudgetToEdit(budget)
+        //setState({ ...state, budget:budget});
+        //setState({ ...state, budget});
+        setState({ ...state, "description" : budget.description, "amount" : budget.amount, "date" : budget.date});
+        //setState({ ...state, "amount" : budget.amount});
+        //setState({ ...state, "date" : budget.date});
+
+        console.log("budget ", budget.description)
+    }
+
     return(
         <>
             <div className="usuarios">
@@ -67,7 +81,7 @@ function List(){
                                                 | {budget.amount} 
                                                 | {budget.date} 
                                                 | {budget.type}
-                                                | <Link to={`/edit/${budget.id}`}>Editar</Link> 
+                                                | <Link to={`/edit/${budget.id}`} onClick={ () => editBudgetData(budget) }>Editar</Link> 
                                                 | <Link to={`/delete/${budget.id}`}>Eliminar</Link>
                                                 </li> 
                                             </div>
