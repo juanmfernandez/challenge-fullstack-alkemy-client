@@ -15,7 +15,6 @@ function Edit(){
     const [state, setState] = useContext(AppContext);
 
     console.log("isLogged: ", isLogged);
-    //console.log("dataToEditPayload: ", JSON.stringify(dataToEditPayload));
 
     const navigate = useNavigate();
     const dataToEdit = {
