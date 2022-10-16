@@ -1,0 +1,125 @@
+.LoginForm {
+    display: flex;
+    width: 710px;
+    height: 698px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    }
+    .usuario, .producto {
+      margin: 9px 9px 9px 9px;
+      color: var(--text-color);
+      overflow: auto;
+      margin-top: 78px;
+  }
+  .registerForm{
+    display: flex;
+    width: 710px;
+    height: 792px;
+    border-radius: 10px;
+    background: #FFFFFF;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+  }
+    .LoginFormTitle {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 28px;
+      line-height: 32px;
+      color: #FFFFFF;
+      margin-block: 0;
+      margin-bottom: 10px;
+    }
+    
+    .LoginFormDescription {
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 28px;
+      color: #666666;
+      margin-bottom: 40px;
+    }
+    
+    .LoginFormContainer {
+      width: 541px;
+      height: 647px;
+  
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .LoginFormInputLabel, .EditFormInputLabel {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 32px;
+      color: #666666;
+      display: block;
+      width: 100%;
+      margin-bottom: 14px;
+    }
+    
+    .LoginFormInput, .EditFormInput{
+      width: 100%;
+      border: none;
+      background-color: #F5F5F5;
+      box-sizing: border-box;
+      margin-bottom: 24px;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      color: #696F79;
+      padding: 10px;
+      border-radius: 10px;
+      height: 58px;
+    }
+    
+    .LoginFormButton, .editFormButton {
+      background: #2148C0;
+      border-radius: 6px;
+      height: 64px;
+      width: 100%;
+      color: white;
+      border: 0;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 32px;
+    }
+    
+    .LoginFormError {
+      width: 100%;
+      border-bottom: 1px solid #8692A6;
+      box-sizing: border-box;
+      height: 64px;
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 24px;
+      color: red;
+      padding: 10px;
+      text-align: center;
+    }
+  
+  .LoginForgotRegister{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    width: 100%;
+  }

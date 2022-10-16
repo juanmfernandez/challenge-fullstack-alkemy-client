@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from '../Providers'
+import "../css/loginForm.css";
+import { format } from "date-fns";
 
-function Edit(){
+function Create(){
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(format(new Date(), 'yyyy-MM-dd hh:mm'));
     const [type, setType] = useState('');
     const [idCategory, setCategory] = useState('');
     const [idUser, setIdUser] = useState('');
+    const contextProviderData = useContext(AppContext);    
+    const { token } = contextProviderData[0];  
     
     const navigate = useNavigate();
     const dataToCreateNew = {
@@ -23,7 +28,8 @@ function Edit(){
         await fetch(`http://localhost:3000/inflow`,{
             method: 'POST',
             headers:{
-                'Content-Type':'application/json'
+                'Content-Type':'application/json',
+                'Authorization':`Bearer ${token}`              
             },
             body: JSON.stringify(dataToCreateNew)
         })
@@ -60,8 +66,7 @@ function Edit(){
     return(
         <>
             <div className="usuarios">
-                <h1>Add</h1>
-                <h4 className="LoginFormDescription">Agregar Items</h4>
+                <h4 className="LoginFormDescription">Add Items</h4>
 
                     <label htmlFor="amount" className="editFormInputLabel">Monto</label>
                     <input name="amount" id="amount" type="text" className="EditFormInput" value={amount} onChange={onAmountChange} />
@@ -70,13 +75,16 @@ function Edit(){
                     <input name="description" id="description" type="text" className="EditFormInput" value={description} onChange={onDescriptionChange} />
 
                     <label htmlFor="date" className="editFormInputLabel">Fecha</label>
-                    <input name="date" id="date" type="date" className="EditFormInput" value={date} onChange={onDateChange} />
-
+                    <input name="date" id="date" type="datetime-local" className="EditFormInput" value={date} onChange={onDateChange} />
+                    
                     <label htmlFor="idCategory" className="editFormInputLabel">Categoria</label>
                     <input name="idCategory" id="idCategory" value={idCategory} type="number" className="EditFormInput" onChange={onCategoryChange} />
 
-                    <label htmlFor="type" className="editFormInputLabel">type</label>
-                    <input name="type" id="type" value={type} type="text" className="EditFormInput" onChange={onTypeChange} />
+                    <label htmlFor="type" className="editFormInputLabel" >type</label>
+                    <select name="type" id="type" className="EditFormInput" defaultValue={type} onChange={onTypeChange}>
+                        <option value="egreso">Egreso</option>
+                        <option value="ingreso">Ingreso</option>
+                    </select>
 
                     <label htmlFor="idUser" className="editFormInputLabel">User ID</label>
                     <input name="idUser" id="idUser" value={idUser} type="number" className="EditFormInput" onChange={onIdUserChange} />
@@ -90,4 +98,4 @@ function Edit(){
     )
 }
 
-export default Edit;
+export default Create;

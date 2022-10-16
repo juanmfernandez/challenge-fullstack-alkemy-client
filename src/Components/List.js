@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {AppContext} from './Providers.js';
+import "./css/list.css";
 
 function List(){
     const [budgets, setBudgets] = useState([]);
@@ -9,9 +10,10 @@ function List(){
     const [prevPage, setPrevPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [pagina, setPagina] = useState(0);
-    //const [budgetToEdit, setBudgetToEdit] = useState([]);
     const [state, setState] = useContext(AppContext);
-
+    const contextPorviderData = useContext(AppContext);
+    const { token } = contextPorviderData[0];
+    
     const getBudgets = () => {
        fetch(`http://localhost:3000/?page=${pagina}`)
            .then(response => response.json())
@@ -21,18 +23,26 @@ function List(){
                 setTotalPages( data.totalPages );
                 setNextPage( data.nextPage );
                 setPrevPage( data.prevPage );
-                //console.log("Api call")
            })
            .catch(e => console.log("Error: " + e))        
     }
 
     useEffect(() => {
         getBudgets();
-        //console.log("Api call use effect")
     },[pagina])
+    
+    useEffect(() => {
+        const tokenls = window.localStorage.getItem("token");
+        if (tokenls) {
+            setState({ ...state, "token" : tokenls})
+        }
+    },[])
 
     useEffect(() => {
-        return () => console.log("Api unmount")
+        const tokenls = window.localStorage.getItem("token");
+        if (tokenls) {
+            setState({ ...state, "token" : tokenls})
+        }
     },[])
 
     const addPage = () => {
@@ -43,14 +53,7 @@ function List(){
     }
 
     const editBudgetData = (budget) => {
-        //setBudgetToEdit(budget)
-        //setState({ ...state, budget:budget});
-        //setState({ ...state, budget});
-        setState({ ...state, "description" : budget.description, "amount" : budget.amount, "date" : budget.date});
-        //setState({ ...state, "amount" : budget.amount});
-        //setState({ ...state, "date" : budget.date});
-
-        console.log("budget ", budget.description)
+        setState({ ...state, "description" : budget.description, "amount" : budget.amount, "date" : budget.date, "idCategory" : budget.Category.id});
     }
 
     return(
@@ -66,8 +69,12 @@ function List(){
                         <button onClick={  addPage }> Next </button>
                     }                    
                 </div>
-                <div className="container-responsive">
-                    <ul>
+                {token != null
+                    ? <><Link to={`/log-out`}>Log out </Link><Link to={`/new-entry`}> Add flow</Link></>
+                    : <Link to={`/login`}>Log in</Link>
+                }                
+                <div className="container-responsive">                
+                    <ul className="card-list">
                     {
                         budgets.map((budget, i) => {
                             return(
@@ -91,9 +98,10 @@ function List(){
                             )
                         })
                     }
-                    </ul>                 
+                    </ul>   
+                                  
                 </div>
-            </div>     
+            </div>
             <Outlet />
         </>
     )

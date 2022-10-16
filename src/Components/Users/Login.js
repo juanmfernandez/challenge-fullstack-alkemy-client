@@ -1,25 +1,25 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from './Providers'
+import { AppContext } from '../Providers'
+import "../css/loginForm.css";
+import "../css/list.css";
 
 function Login(){
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const isLogged = useContext(AppContext);
-    const dataToEditPayload = isLogged[0];
-
+    const [error, setError] = useState('');
     const [state, setState] = useContext(AppContext);
+    const contextPorviderData = useContext(AppContext);
+    const { token } = contextPorviderData[0];
 
-    console.log("isLogged: ", isLogged);
-
-    const navigate = useNavigate();
+    console.log("contextPorviderData: ", contextPorviderData);
+    console.log(token);
 
     const dataToLogin = {
         email: email,
         password: password,
     }
-
 
     const login = () => {
         fetch(`http://localhost:3000/user/login`,{
@@ -30,12 +30,19 @@ function Login(){
             body: JSON.stringify(dataToLogin)
         })
         .then((response) => response.json())
-        .then((json) => 
+        .then((json) =>{ 
+            if (json.errors) {
+                json.errors.map((error, i) => {
+                    setError('Wrong password or e-mail.')
+                })
+            }
+            if (json.error) {
+                setError(json.error) 
+            }
+
             setContextToken(json.token)
-        )
-        //.then((json) => console.log(json))
-        //
-        ;       
+            window.localStorage.setItem("token", json.token)
+        });       
      }
 
     function handleSubmitLogin() {
@@ -48,22 +55,18 @@ function Login(){
         setPassword(event.target.value);
     }
 
-
     function setContextToken(token) {
         setState({ ...state, "token" : token})
     };
 
-    function setContextisLogged() {
-        setState({ ...state, "isLogged" : true})
-    };
-
-
     return(
         <>
             <div className="usuarios">
-                <h1>Login</h1>
                 <h4 className="LoginFormDescription">Login</h4>
-
+                {error.length > 0 
+                    ? (<div className="LoginFormError">{error}</div>) 
+                    : null
+                }   
                     <label htmlFor="email" className="loginFormInputLabel">E-mail</label>
                     <input name="email" id="email" type="email" className="LoginFormInput" value={email} onChange={loginEmailChange} />
 
@@ -71,7 +74,7 @@ function Login(){
                     <input name="password" id="password" type="password" className="LoginFormInput" value={password} onChange={loginPasswordChange} />
 
                 <button 
-                    className="loginFormButton" 
+                    className="LoginFormButton" 
                     onClick={handleSubmitLogin}
                 >Login</button>
             </div>
