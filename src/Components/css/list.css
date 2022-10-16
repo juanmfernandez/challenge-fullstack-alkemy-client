@@ -3,7 +3,7 @@
     color: var(--text-color);
     overflow: auto;
 }
-.usuario, .producto {
+.usuario, .producto, .budget {
     margin: 9px 9px 9px 9px;
     color: var(--text-color);
     overflow: auto;
