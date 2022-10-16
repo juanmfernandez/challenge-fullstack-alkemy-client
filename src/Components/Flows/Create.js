@@ -25,7 +25,7 @@ function Create(){
     }
 
     const addBudget = async () => {
-        await fetch(`http://localhost:3000/inflow`,{
+        await fetch(`${process.env.REACT_APP_API_HOST_LOCAL}/inflow`,{
             method: 'POST',
             headers:{
                 'Content-Type':'application/json',

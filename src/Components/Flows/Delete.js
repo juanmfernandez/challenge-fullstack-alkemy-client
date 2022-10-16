@@ -10,7 +10,7 @@ function Edit(){
 
 
     const deleteBudget = async () => {
-        await fetch(`http://localhost:3000/inflow/${params.id}`,{
+        await fetch(`${process.env.REACT_APP_API_HOST_LOCAL}/inflow/${params.id}`,{
             method: 'DELETE',
             headers:{
                 'Content-Type':'application/json',

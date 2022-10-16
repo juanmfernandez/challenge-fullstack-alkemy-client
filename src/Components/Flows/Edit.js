@@ -21,7 +21,7 @@ function Edit(){
     }
 
     const editBudget = async () => {
-        await fetch(`http://localhost:3000/inflow/${params.id}`,{
+        await fetch(`${process.env.REACT_APP_API_HOST_LOCAL}/inflow/${params.id}`,{
             method: 'PUT',
             headers:{
                 'Content-Type':'application/json',

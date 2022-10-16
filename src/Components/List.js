@@ -15,7 +15,7 @@ function List(){
     const { token } = contextPorviderData[0];
     
     const getBudgets = () => {
-       fetch(`http://localhost:3000/?page=${pagina}`)
+       fetch(`${process.env.REACT_APP_API_HOST_LOCAL}/?page=${pagina}`)
            .then(response => response.json())
            .then(data =>{ 
                 setBudgets( data.budgets );
@@ -69,6 +69,7 @@ function List(){
                         <button onClick={  addPage }> Next </button>
                     }                    
                 </div>
+
                 {token != null
                     ? <><Link to={`/log-out`}>Log out </Link><Link to={`/new-entry`}> Add flow</Link></>
                     : <Link to={`/login`}>Log in</Link>

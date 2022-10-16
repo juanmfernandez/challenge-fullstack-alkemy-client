@@ -20,7 +20,7 @@ function CreateUser(){
     }
 
     const addUser = async () => {
-        await fetch(`http://localhost:3000/user`,{
+        await fetch(`${process.env.REACT_APP_API_HOST_LOCAL}/user`,{
             method: 'POST',
             headers:{
                 'Content-Type':'application/json'             
