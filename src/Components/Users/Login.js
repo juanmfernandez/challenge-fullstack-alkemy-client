@@ -33,16 +33,17 @@ function Login(){
         .then((json) =>{ 
             if (json.errors) {
                 json.errors.map((error, i) => {
-                    setError('Wrong password or e-mail.')
+                    setError('Wrong password or e-mail.');
+
                 })
             }
             if (json.error) {
                 setError(json.error) 
             }
-
             setContextToken(json.token)
             window.localStorage.setItem("token", json.token)
-        });       
+        });
+     
      }
 
     function handleSubmitLogin() {
@@ -61,22 +62,30 @@ function Login(){
 
     return(
         <>
-            <div className="usuarios">
+            <div className="d-grid gap-2 col-6 mx-auto">
                 <h4 className="LoginFormDescription">Login</h4>
+
                 {error.length > 0 
-                    ? (<div className="LoginFormError">{error}</div>) 
+                    ? 
+                        <>
+                            <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong>{error}</strong>
+                            </div>                    
+                        </>
                     : null
                 }   
-                    <label htmlFor="email" className="loginFormInputLabel">E-mail</label>
-                    <input name="email" id="email" type="email" className="LoginFormInput" value={email} onChange={loginEmailChange} />
 
+                <div class="mb-3">
+                    <label htmlFor="email" className="loginFormInputLabel">E-mail</label>
+                    <input name="email" id="email" type="email" className="LoginFormInput" value={email} onChange={loginEmailChange} />                    
+                </div>
+                <div class="mb-3">
                     <label htmlFor="password" className="loginFormInputLabel">Password</label>
                     <input name="password" id="password" type="password" className="LoginFormInput" value={password} onChange={loginPasswordChange} />
+                </div>
 
-                <button 
-                    className="LoginFormButton" 
-                    onClick={handleSubmitLogin}
-                >Login</button>
+                <button className="btn btn-primary" onClick={handleSubmitLogin}>Login</button>
+
             </div>
         </>
     )

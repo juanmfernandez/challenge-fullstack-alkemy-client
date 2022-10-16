@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {AppContext} from './Providers.js';
 import { format } from "date-fns";
+import NavBar from "./NavBar";
 //import "./css/list.css";
 
 function List(){
@@ -59,23 +60,20 @@ function List(){
 
     return(
         <>
+        <NavBar token={token} />
             <div className="usuarios justify-content-center">  
-                {token != null
-                    ? <><Link to={`/log-out`}>Log out </Link><Link to={`/new-entry`}> Add flow</Link></>
-                    : <Link to={`/login`}>Log in</Link>
-                }   
                 <div className="table-responsive">
                     {totalBudgets ? <><h4>Items: {totalBudgets} </h4></> : <><p> No se pudieron obtener datos. </p></>}
-                    
+
                     <table className="table">
                         <thead className="table-light">
                             <tr>
-                                <th className="text-center" scope="col">Fecha</th>
-                                <th className="text-center" scope="col">Monto</th>
+                                <th className="" scope="col">Fecha</th>
+                                <th className="" scope="col">Monto</th>
                                 <th className="text-center" scope="col">Descripcion</th>
-                                <th className="text-center" scope="col">Tipo</th>
-                                <th className="text-center" scope="col">Editar</th>
-                                <th className="text-center" scope="col">Eliminar</th>
+                                <th className="" scope="col">Tipo</th>
+                                <th className="" scope="col">Editar</th>
+                                <th className="" scope="col">Eliminar</th>
                             </tr>
                         </thead>
                         <tbody>                        
@@ -87,22 +85,31 @@ function List(){
                                             <td>{budget.amount}</td>
                                             <td>{budget.description}</td>
                                             <td>{budget.type}</td>
-                                            <td><Link to={`/edit/${budget.id}`} onClick={ () => editBudgetData(budget) }>Editar</Link></td>
-                                            <td><Link to={`/delete/${budget.id}`}>Eliminar</Link></td>
+                                            <td>
+                                                <Link to={`/edit/${budget.id}`} onClick={ () => editBudgetData(budget) }>
+                                                    <button type="button" className="btn btn-warning">Editar</button>
+                                                </Link>
+                                            </td>
+                                            <td>
+                                                <Link to={`/delete/${budget.id}`}>
+                                                    <button type="button" className="btn btn-danger">Eliminar</button>
+                                                </Link>
+                                            </td>
                                         </tr>
                                     )
                                 })
                             }                        
                         </tbody>
                     </table>
-                </div>             
+                </div>         
+ 
                 <div className="next-prev">
                     {prevPage > -1 && prevPage < totalPages &&
-                        <button onClick={ restPage }> Prev </button>
+                        <button type="button" onClick={  restPage } className="btn btn-outline-info">Prev</button>
                     }
                     <p> Página {pagina+1} de {Math.ceil(totalBudgets/10)} </p>
                     {nextPage && pagina < totalPages && nextPage < totalPages &&
-                        <button onClick={  addPage }> Next </button>
+                        <button type="button" onClick={  addPage } className="btn btn-outline-info">Next</button>
                     }                    
                 </div>                
             </div>
