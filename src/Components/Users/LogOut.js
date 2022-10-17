@@ -9,7 +9,7 @@ function LogOut(){
         window.localStorage.removeItem("token")
         setState({ ...state, "token" : null})
         navigate('/')
-    },[])
+    })
 }
 
 export default LogOut;

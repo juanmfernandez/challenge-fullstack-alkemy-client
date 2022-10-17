@@ -65,7 +65,7 @@ function Create(){
 
     return(
         <>
-            <div className="usuarios">
+            <div className="d-grid gap-2 col-6 mx-auto">
                 <h4 className="LoginFormDescription">Add Items</h4>
 
                     <label htmlFor="amount" className="editFormInputLabel">Monto</label>
@@ -81,7 +81,7 @@ function Create(){
                     <input name="idCategory" id="idCategory" value={idCategory} type="number" className="EditFormInput" onChange={onCategoryChange} />
 
                     <label htmlFor="type" className="editFormInputLabel" >type</label>
-                    <select name="type" id="type" className="EditFormInput" defaultValue={type} onChange={onTypeChange}>
+                    <select name="type" id="type" className="EditFormInput"  onChange={onTypeChange}>
                         <option value="egreso">Egreso</option>
                         <option value="ingreso">Ingreso</option>
                     </select>

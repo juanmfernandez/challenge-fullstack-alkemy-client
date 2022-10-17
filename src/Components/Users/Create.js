@@ -1,17 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from '../Providers'
 
 function CreateUser(){
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const contextProviderData = useContext(AppContext);    
-    const { token } = contextProviderData[0];  
-    
     const navigate = useNavigate();
+
     const dataToCreateNew = {
         firstName: firstName,
         lastName: lastName,
@@ -27,11 +23,6 @@ function CreateUser(){
             },
             body: JSON.stringify(dataToCreateNew)
         })
-            .then(response => {
-                console.log(response.json())
-            }).then(data=> 
-                console.log(data),
-            );       
      }
 
     function handleSubmitNew(){
@@ -53,7 +44,7 @@ function CreateUser(){
 
     return(
         <>
-            <div className="usuarios">
+            <div className="d-grid gap-2 col-6 mx-auto">
                 <h1>Add User</h1>
                 <h4 className="LoginFormDescription"> </h4>
 

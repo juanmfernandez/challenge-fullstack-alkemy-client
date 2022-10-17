@@ -21,9 +21,10 @@ function App() {
       <Provider>
         <Routes>
           <Route path="/"  element={ <Landing /> }>
-            <Route index element={ <Login /> } />
             <Route path="*" element={<NotFound />} />
+            <Route path="/login/list" element={<List />} />
             <Route element={<ProtectedRoutes />}>
+              <Route index element={ <List /> } />
               <Route path="/list" element={<List />} />
               <Route path="/new-entry" element={<Create />} />
               <Route path="/edit/:id" element={<Edit />} />

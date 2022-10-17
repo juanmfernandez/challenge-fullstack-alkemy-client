@@ -10,9 +10,7 @@ function Edit(){
     const contextProviderData = useContext(AppContext);    
     const { token, amount, description, date, idCategory } = contextProviderData[0];    
 
-    console.log("contextProviderData: ", contextProviderData);
-
-    
+    //console.log("contextProviderData: ", contextProviderData);
     const dataToEdit = {
         amount: parseFloat(amount),
         description: description,
@@ -29,11 +27,6 @@ function Edit(){
             },
             body: JSON.stringify(dataToEdit)
         })
-            .then(response => {
-                console.log(response.json())
-            }).then(data=> 
-                console.log(data),
-            );       
      }
 
     function handleSubmitChanges(){
@@ -57,7 +50,7 @@ function Edit(){
 
     return(
         <>
-            <div className="usuarios">
+            <div className="d-grid gap-2 col-6 mx-auto">
 
                 <h4 className="LoginFormDescription">Edit item</h4>
 

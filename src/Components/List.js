@@ -1,26 +1,29 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {AppContext} from './Providers.js';
 import { format } from "date-fns";
-import NavBar from "./NavBar";
+import Alert from 'react-bootstrap/Alert';
+
 
 function List(){
     const [budgets, setBudgets] = useState([]);
     const [totalBudgets, setTotalBudgets] = useState([]);
+    const [totalOut, setTotalOut] = useState([]);
+    const [totalIn, setTotalIn] = useState([]);
     const [nextPage, setNextPage] = useState(0);
     const [prevPage, setPrevPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [pagina, setPagina] = useState(0);
     const [state, setState] = useContext(AppContext);
-    const contextPorviderData = useContext(AppContext);
-    const { token } = contextPorviderData[0];
-    
+
     const getBudgets = () => {
        fetch(`${process.env.REACT_APP_API_HOST_LOCAL}/?page=${pagina}`)
            .then(response => response.json())
            .then(data =>{ 
                 setBudgets( data.budgets );
                 setTotalBudgets( data.count );
+                setTotalOut( data.totalOut );
+                setTotalIn( data.totalIn );
                 setTotalPages( data.totalPages );
                 setNextPage( data.nextPage );
                 setPrevPage( data.prevPage );
@@ -60,9 +63,26 @@ function List(){
     return(
         <>
             <div className="usuarios justify-content-center">  
-                <div className="table-responsive">
-                    {totalBudgets ? <><h4>Items: {totalBudgets} </h4></> : <><p> No se pudieron obtener datos. </p></>}
+            {totalBudgets 
+                ? 
+                    <>            
+                        <Alert variant="info">
+                            Items totales: {totalBudgets} 
+                        </Alert>
+                        <Alert variant="success">
+                            Ingresos totales: {totalIn} 
+                        </Alert>
+                        <Alert variant="warning">
+                            Egresos totales: {totalOut} 
+                        </Alert>
+                    </> 
+                : 
+                    <>            
+                        <Alert variant="danger">Ha ocurrido un error</Alert>
+                    </>
+            }
 
+                <div className="table-responsive">
                     <table className="table">
                         <thead className="table-light">
                             <tr>
@@ -78,7 +98,7 @@ function List(){
                             {
                                 budgets.map((budget, i) => {
                                     return(
-                                        <tr>
+                                        <tr key={i}>
                                             <td>{format(new Date(budget.date), 'yyyy-MM-dd hh:mm')}</td>                                            
                                             <td>{budget.amount}</td>
                                             <td>{budget.description}</td>

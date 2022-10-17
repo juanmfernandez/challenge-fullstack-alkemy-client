@@ -1,5 +1,3 @@
-import { Link, Outlet } from "react-router-dom";
-import Container from 'react-bootstrap/Container';
 import {AppContext} from './Providers.js';
 import NavBar from "./NavBar";
 import Footer from "./Footer";

@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from '../Providers'
 //import AlertDismissible from '../AlertDismissible'
 import Alert from 'react-bootstrap/Alert';
-import Button from 'react-bootstrap/Button';
 import "../css/loginForm.css";
 import "../css/list.css";
 
@@ -17,9 +16,6 @@ function Login(){
     const [state, setState] = useContext(AppContext);
     const contextPorviderData = useContext(AppContext);
     const { token } = contextPorviderData[0];
-
-    console.log("contextPorviderData: ", contextPorviderData);
-    console.log(token);
 
     const dataToLogin = {
         email: email,
@@ -37,9 +33,7 @@ function Login(){
         .then((response) => response.json())
         .then((json) =>{ 
             if (json.errors) {
-                json.errors.map((error, i) => {
-                    setError('Wrong password or e-mail.');
-                })
+                setError('Wrong password or e-mail.');
             }
             if (json.error) {
                 setError(json.error) 
@@ -60,7 +54,7 @@ function Login(){
 
     useEffect(() => {
         if (token) {
-            navigate('list')
+            navigate('/')
         }
     },[])
 
@@ -91,11 +85,11 @@ function Login(){
                     </Alert>
                 } 
 
-                <div class="mb-3">
+                <div className="mb-3">
                     <label htmlFor="email" className="loginFormInputLabel">E-mail</label>
                     <input name="email" id="email" type="email" className="LoginFormInput" value={email} onChange={loginEmailChange} />                    
                 </div>
-                <div class="mb-3">
+                <div className="mb-3">
                     <label htmlFor="password" className="loginFormInputLabel">Password</label>
                     <input name="password" id="password" type="password" className="LoginFormInput" value={password} onChange={loginPasswordChange} />
                 </div>

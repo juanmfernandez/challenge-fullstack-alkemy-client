@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppContext } from '../Providers';
 
@@ -8,7 +8,6 @@ function Edit(){
     const contextProviderData = useContext(AppContext);    
     const { token } = contextProviderData[0]; 
 
-
     const deleteBudget = async () => {
         await fetch(`${process.env.REACT_APP_API_HOST_LOCAL}/inflow/${params.id}`,{
             method: 'DELETE',
@@ -17,11 +16,6 @@ function Edit(){
                 'Authorization': `Bearer ${token}`
             },
         })
-            .then(response => {
-                console.log(response.json())
-            }).then(data=> 
-                console.log(data),
-            );       
      }
 
     function handleConfirmDelete(){
