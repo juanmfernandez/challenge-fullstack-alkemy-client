@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from '../Providers'
 //import AlertDismissible from '../AlertDismissible'
 import Alert from 'react-bootstrap/Alert';
@@ -13,6 +13,7 @@ function Login(){
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [show, setShow] = useState(false);
+    const location = useLocation();
     const [state, setState] = useContext(AppContext);
     const contextPorviderData = useContext(AppContext);
     const { token } = contextPorviderData[0];
@@ -45,6 +46,10 @@ function Login(){
             }
             setContextToken(json.token)
             window.localStorage.setItem("token", json.token)
+            if (location.state?.from) {
+                navigate(location.state.from)
+            }
+            navigate('list')
         });
      
      }
@@ -52,6 +57,12 @@ function Login(){
     useEffect(() => {
         setShow(true)
     },[error.length > 0])
+
+    useEffect(() => {
+        if (token) {
+            navigate('list')
+        }
+    },[])
 
     function handleSubmitLogin() {
         setShow(false);

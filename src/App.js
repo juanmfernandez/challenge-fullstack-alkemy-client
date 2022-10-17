@@ -24,6 +24,7 @@ function App() {
             <Route index element={ <Login /> } />
             <Route path="*" element={<NotFound />} />
             <Route element={<ProtectedRoutes />}>
+              <Route path="/list" element={<List />} />
               <Route path="/new-entry" element={<Create />} />
               <Route path="/edit/:id" element={<Edit />} />
               <Route path="/delete/:id" element={<Delete />} />            
