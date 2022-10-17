@@ -13,22 +13,23 @@ import CreateUser from './Components/Users/Create';
 import Login from './Components/Users/Login';
 import LogOut from './Components/Users/LogOut';
 import { ProtectedRoutes } from './Components/ProtectedRoutes';
-
+import Landing from './Components/Landing';
 
 function App() {
   return (
     <BrowserRouter>
       <Provider>
         <Routes>
-          <Route path="/"  element={ <List /> }>
+          <Route path="/"  element={ <Landing /> }>
             <Route index element={ <Login /> } />
             <Route path="*" element={<NotFound />} />
             <Route element={<ProtectedRoutes />}>
               <Route path="/new-entry" element={<Create />} />
               <Route path="/edit/:id" element={<Edit />} />
-              <Route path="/delete/:id" element={<Delete />} />
+              <Route path="/delete/:id" element={<Delete />} />            
             </Route>
             <Route path="/sign-up" element={<CreateUser />} />
+
             <Route path="/login" element={<Login />} />
             <Route path="/log-out" element={<LogOut />} />
           </Route>

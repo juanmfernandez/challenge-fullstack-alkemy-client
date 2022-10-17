@@ -3,7 +3,6 @@ import { Link, Outlet } from "react-router-dom";
 import {AppContext} from './Providers.js';
 import { format } from "date-fns";
 import NavBar from "./NavBar";
-//import "./css/list.css";
 
 function List(){
     const [budgets, setBudgets] = useState([]);
@@ -60,7 +59,6 @@ function List(){
 
     return(
         <>
-        <NavBar token={token} />
             <div className="usuarios justify-content-center">  
                 <div className="table-responsive">
                     {totalBudgets ? <><h4>Items: {totalBudgets} </h4></> : <><p> No se pudieron obtener datos. </p></>}
@@ -113,7 +111,7 @@ function List(){
                     }                    
                 </div>                
             </div>
-            <Outlet />
+            
         </>
     )
 }

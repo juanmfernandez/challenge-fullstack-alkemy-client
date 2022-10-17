@@ -10,6 +10,9 @@
     justify-content: flex-start;
     align-items: center;
     }
+    .none{
+      display: none !important;
+    }
     .usuario, .producto {
       margin: 9px 9px 9px 9px;
       color: var(--text-color);
